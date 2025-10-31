@@ -4,24 +4,34 @@
 #include <stdio.h>
 
 int main() {
-    int score;
-    printf("请输入学生成绩（0-100）：");
-    scanf("%d", &score);
-
-    // 先判断成绩是否在有效范围（0-100）
-    if (score < 0 || score > 100) {
-        printf("成绩无效，请输入0-100之间的整数\n");
-    } else if (score >= 90) {  // 90-100分
-        printf("A\n");
-    } else if (score >= 80) {  // 80-89分
-        printf("B\n");
-    } else if (score >= 70) {  // 70-79分
-        printf("C\n");
-    } else if (score >= 60) {  // 60-69分
-        printf("D\n");
-    } else {  // 60分以下
-        printf("E\n");
+    int num = 100;  // 起始数字，从100开始
+    int count = 0;  // 用于控制输出格式（避免末尾空格）
+    
+    while (num <= 999) {  // 循环条件：数字不超过999
+        // 分解出百位、十位、个位
+        int hundreds = num / 100;
+        int tens = (num / 10) % 10;
+        int units = num % 10;
+        
+        // 计算各位立方和
+        int sum = hundreds * hundreds * hundreds + 
+                  tens * tens * tens + 
+                  units * units * units;
+        
+        // 判断是否为水仙花数
+        if (sum == num) {
+            // 控制输出格式：第一个数前无空格，后续数前加空格
+            if (count == 0) {
+                printf("%d", num);
+                count++;
+            } else {
+                printf(" %d", num);
+            }
+        }
+        
+        num++;  // 数字自增，继续判断下一个数
     }
-
+    
+    printf("\n");  // 输出结束后换行
     return 0;
 }
