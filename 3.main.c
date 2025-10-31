@@ -3,45 +3,34 @@
 //雷得苹
 #include <stdio.h>
 
-int main() {
-    int a, b;
-    char op;
-    int result;  // 存储计算结果（除法结果为整数时使用）
-    float div_result;  // 存储除法可能产生的浮点数结果
+int main() 
+{
+    int n, i;
+    int is_prime = 1;  // 标记是否为质数，初始假设是质数
 
-    // 读取输入的两个整数和运算符
-    scanf("%d %d %c", &a, &b, &op);
+    // 接收用户输入
+    scanf("%d", &n);
 
-    // 根据运算符进行计算
-    switch (op) {
-        case '+':
-            result = a + b;
-            printf("%d\n", result);
-            break;
-        case '-':
-            result = a - b;
-            printf("%d\n", result);
-            break;
-        case '*':
-            result = a * b;
-            printf("%d\n", result);
-            break;
-        case '/':
-            // 仅处理除数不为0的情况
-            if (b != 0) {
-                // 判断是否能整除
-                if (a % b == 0) {
-                    result = a / b;
-                    printf("%d\n", result);
-                } else {
-                    div_result = (float)a / b;  // 强制类型转换为浮点数
-                    printf("%f\n", div_result);
-                }
+    // 处理特殊情况：小于2的数不是质数
+    if (n <= 1) {
+        is_prime = 0;
+    } else {
+        i = 2;
+        // 使用while循环判断是否有除1和自身外的因数
+        while (i < n) {
+            if (n % i == 0) {  // 若能被i整除，则不是质数
+                is_prime = 0;
+                break;  // 找到因数后提前退出循环
             }
-            break;
-        default:
-            // 可根据需要处理无效运算符的情况
-            break;
+            i++;  // 检查下一个可能的因数
+        }
+    }
+
+    // 根据判断结果输出提示信息
+    if (is_prime) {
+        printf("密钥安全，密码设置成功\n");
+    } else {
+        printf("密钥不安全，请重新输入\n");
     }
 
     return 0;
