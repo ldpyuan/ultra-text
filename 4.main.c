@@ -3,36 +3,41 @@
 //雷得苹
 #include <stdio.h>
 
-int main()
-{
-    int num = 100;  // 从100开始遍历
-    int first = 1;  // 标记是否是第一个水仙花数，用于控制输出格式
+/**
+ * @brief 计算 a 的 b 次幂 (a^b)
+ * @param a 底数
+ * @param b 指数 (非负整数)
+ * @return a 的 b 次幂的结果
+ */
+double power(int a, int b) {
+    double result = 1.0;
+    // 循环 b 次，每次将 result 乘以 a
+    for (int i = 0; i < b; i++) {
+        result *= a;
+    }
+    return result;
+}
 
-    while (num <= 999) {  // 循环条件：不超过999
-        // 分解百位、十位、个位数字
-        int hundreds = num / 100;          // 百位：num除以100的商
-        int tens = (num / 10) % 10;        // 十位：num除以10的商再取余10
-        int units = num % 10;              // 个位：num取余10
+int main() {
+    int sum = 0;
+    int n = 5; // 计算 1^2 到 5^2 的和
 
-        // 计算各位数字的立方和
-        int cube_sum = hundreds * hundreds * hundreds 
-                     + tens * tens * tens 
-                     + units * units * units;
+    printf("计算 1^2 + 2^2 + ... + %d^2 的值：\
+", n);
 
-        // 判断是否为水仙花数（立方和等于自身）
-        if (cube_sum == num) {
-            // 控制输出格式：第一个数前无空格，后续数前加空格
-            if (first) {
-                printf("%d", num);
-                first = 0;  // 第一个数输出后，标记为非首次
-            } else {
-                printf(" %d", num);
-            }
-        }
-
-        num++;  // 数字自增，继续下一个数的判断
+    // 遍历 1 到 n，计算每个数的平方并累加
+    for (int i = 1; i <= n; i++) {
+        // 调用 power 函数计算 i 的平方
+        sum += power(i, 2); 
+        // 打印每一步的计算过程（可选）
+        printf("%d^2 = %.0f\
+", i, power(i, 2));
     }
 
-    printf("\n");  // 输出结束后换行
+    // 输出最终的和
+    printf("\
+它们的和是: %d\
+", sum);
+
     return 0;
 }
