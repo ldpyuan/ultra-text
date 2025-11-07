@@ -3,31 +3,35 @@
 //雷得苹
 #include <stdio.h>
 
-int isPrime(int n) {
-    // 小于2的数不是质数
-    if (n <= 1) {
-        return 0;
-    }
-    // 检查从2到n-1是否有能整除n的数
-    for (int i = 2; i < n; i++) {
-        if (n % i == 0) {
-            return 0; // 不是质数
+int main() {
+    // 定义一个 3x3 的二维数组
+    int matrix[3][3];
+    int i, j;
+
+    // 提示用户输入矩阵元素
+    printf("请输入一个 3x3 的矩阵，每行 3 个整数，以空格或回车分隔：\
+");
+
+    // 循环输入矩阵元素
+    for (i = 0; i < 3; i++) {  // 控制行数
+        for (j = 0; j < 3; j++) {  // 控制列数
+            scanf("%d", &matrix[i][j]);  // 输入每个元素
         }
     }
-    return 1; // 是质数
-}
 
-int main() {
-    int n;
-    // 接收用户输入
-    scanf("%d", &n);
-    
-    // 判断是否为质数并输出相应提示
-    if (isPrime(n)) {
-        printf("密钥安全，密码设置成功\n");
-    } else {
-        printf("密钥不安全，请重新输入\n");
+    // 提示即将输出矩阵
+    printf("\
+你输入的 3x3 矩阵如下：\
+");
+
+    // 循环输出矩阵元素
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
+            printf("%d ", matrix[i][j]);  // 输出每个元素，加空格分隔
+        }
+        printf("\
+");  // 每行结束后换行
     }
-    
+
     return 0;
 }
