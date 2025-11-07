@@ -3,40 +3,53 @@
 //雷得苹
 #include <stdio.h>
 
-int main()
- {
-    int arr[5];  // 长度为5的数组，存储提交记录
-    int i;
+/**
+ * @brief 将一个整型数组的元素在原数组上进行反转
+ * @param arr 指向数组首元素的指针（数组名）
+ * @param length 数组的长度
+ */
+void reverseArray(int arr[], int length) {
+    // 只需要循环数组的前半部分
+    for (int i = 0; i < length / 2; i++) {
+        // 计算当前元素需要交换的对应位置
+        int mirrorIndex = length - 1 - i;
 
-    // 输入当前记录的前4位学号
-    printf("请输入前4位学生学号：");
-    i = 0;
-    while (i < 4) {
-        scanf("%d", &arr[i]);
-        i++;
+        // 交换 arr[i] 和 arr[mirrorIndex] 的值
+        int temp = arr[i];
+        arr[i] = arr[mirrorIndex];
+        arr[mirrorIndex] = temp;
     }
+}
 
-    // 数组元素整体后移一位（原第1位→第2位，直到原第4位→第5位）
-    i = 4;  // 从最后一位开始处理
-    while (i > 0) {
-        arr[i] = arr[i - 1];  // 后一位赋值为前一位的值
-        i--;
+/**
+ * @brief 打印一个整型数组的内容
+ * @param arr 指向数组首元素的指针（数组名）
+ * @param length 数组的长度
+ */
+// 为了代码整洁，我们额外编写一个打印数组的函数
+void printArray(int arr[], int length) {
+    for (int i = 0; i < length; i++) {
+        printf("%d ", arr[i]);
     }
+    printf("\
+");
+}
 
-    // 在首位（第1位）补0
-    arr[0] = 0;
+int main() {
+    // 1. 定义并初始化数组
+    int arr[5] = {1, 2, 3, 4, 5};
+    int length = 5;
 
-    // 输出更新后的完整数组
-    printf("更新后的提交记录：");
-    i = 0;
-    while (i < 5) {
-        printf("%d", arr[i]);
-        if (i < 4) {  // 除最后最后一位，后面加空格
-            printf(" ");
-        }
-        i++;
-    }
-    printf("\n");
+    // 2. 打印原始数组
+    printf("原始数组: ");
+    printArray(arr, length);
+
+    // 3. 调用反转函数
+    reverseArray(arr, length);
+
+    // 4. 打印反转后的数组
+    printf("反转后数组: ");
+    printArray(arr, length);
 
     return 0;
 }
