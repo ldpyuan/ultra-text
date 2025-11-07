@@ -2,31 +2,30 @@
 //yuan2006.06@outlook.com
 //雷得苹
 #include <stdio.h>
+/**
+ * @brief 计算等差数列的和
+ * @param a1 首项
+ * @param an 末项
+ * @param step 步长
+ * @return 等差数列的和
+ */
+int arithmeticSum(int a1, int an, int step) {
+    // 计算项数
+    int n = (an - a1) / step + 1;
+    // 计算等差数列的和
+    int sum = n * (a1 + an) / 2;
+    return sum;
+}
 
 int main() {
-    int arr[5];  // 定义长度为5的数组
-    int i = 0;   // 用于循环输入前四位的索引
+    // 计算 1 + 2 + 3 + ... + 100
+    int a1 = 1;
+    int an = 100;
+    int step = 1;
+    int sum = arithmeticSum(a1, an, step);
 
-    // 使用while循环输入前四位元素
-    while (i < 4) {
-        scanf("%d", &arr[i]);
-        i++;
-    }
-
-    // 计算第五位（前四位的和）
-    arr[4] = arr[0] + arr[1] + arr[2] + arr[3];
-
-    // 使用while循环输出整个数组
-    i = 0;
-    while (i < 5) {
-        printf("%d", arr[i]);
-        // 除最后一位外，每个元素后加空格
-        if (i < 4) {
-            printf(" ");
-        }
-        i++;
-    }
-    printf("\n");
+    printf("从 %d 加到 %d（步长为 %d）的和是: %d\
+", a1, an, step, sum);
 
     return 0;
 }
