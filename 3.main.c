@@ -3,35 +3,46 @@
 //雷得苹
 #include <stdio.h>
 
-int main() 
-{
-    int n, i;
-    int is_prime = 1;  // 标记是否为质数，初始假设是质数
-
-    // 接收用户输入
-    scanf("%d", &n);
-
-    // 处理特殊情况：小于2的数不是质数
-    if (n <= 1) {
-        is_prime = 0;
-    } else {
-        i = 2;
-        // 使用while循环判断是否有除1和自身外的因数
-        while (i < n) {
-            if (n % i == 0) {  // 若能被i整除，则不是质数
-                is_prime = 0;
-                break;  // 找到因数后提前退出循环
+// 冒泡排序函数：对数组进行从小到大排序
+void bubbleSort(int arr[], int n) {
+    int i, j, temp;
+    // 外层循环控制排序轮数，共需要 n-1 轮
+    for (i = 0; i < n - 1; i++) {
+        // 内层循环控制每轮比较次数，每轮减少 1 次比较（最后 i 个元素已排序）
+        for (j = 0; j < n - 1 - i; j++) {
+            // 如果当前元素大于下一个元素，交换它们
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
-            i++;  // 检查下一个可能的因数
         }
     }
+}
 
-    // 根据判断结果输出提示信息
-    if (is_prime) {
-        printf("密钥安全，密码设置成功\n");
-    } else {
-        printf("密钥不安全，请重新输入\n");
+int main() {
+    int arr[10];
+    int i;
+
+    // 提示用户输入 10 个整数
+    printf("请输入 10 个整数，以空格或回车分隔：\
+");
+    for (i = 0; i < 10; i++) {
+        scanf("%d", &arr[i]);
     }
+
+    // 调用冒泡排序函数对数组排序
+    bubbleSort(arr, 10);
+
+    // 输出排序后的结果
+    printf("\
+排序后的数组（从小到大）：\
+");
+    for (i = 0; i < 10; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\
+");
 
     return 0;
 }
