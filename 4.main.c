@@ -4,40 +4,46 @@
 #include <stdio.h>
 
 /**
- * @brief 计算 a 的 b 次幂 (a^b)
- * @param a 底数
- * @param b 指数 (非负整数)
- * @return a 的 b 次幂的结果
+ * @brief 通过指针使数组中每个元素自增 1
+ * @param arr 指向数组首元素的指针（接收数组地址）
+ * @param len 数组长度（避免指针越界）
  */
-double power(int a, int b) {
-    double result = 1.0;
-    // 循环 b 次，每次将 result 乘以 a
-    for (int i = 0; i < b; i++) {
-        result *= a;
+void incrementArray(int *arr, int len) {
+    // 定义指针 p，初始指向数组首元素
+    int *p = arr;
+    // 循环遍历数组：指针从首元素移动到末元素（p < arr + len 表示未越界）
+    for (; p < arr + len; p++) {
+        (*p)++;  // 解引用指针，对当前指向的元素自增 1（括号避免优先级问题）
     }
-    return result;
 }
 
 int main() {
-    int sum = 0;
-    int n = 5; // 计算 1^2 到 5^2 的和
+    int arr[5];
+    int i;
+    int len = 5;
 
-    printf("计算 1^2 + 2^2 + ... + %d^2 的值：\
-", n);
-
-    // 遍历 1 到 n，计算每个数的平方并累加
-    for (int i = 1; i <= n; i++) {
-        // 调用 power 函数计算 i 的平方
-        sum += power(i, 2); 
-        // 打印每一步的计算过程（可选）
-        printf("%d^2 = %.0f\
-", i, power(i, 2));
+    // 1. 输入数组元素
+    printf("请输入 5 个整数，以空格或回车分隔：\n");
+    for (i = 0; i < len; i++) {
+        scanf("%d", &arr[i]);
     }
 
-    // 输出最终的和
-    printf("\
-它们的和是: %d\
-", sum);
+    // 2. 打印原始数组
+    printf("\n自增前的数组：\n");
+    for (i = 0; i < len; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    // 3. 调用函数：传入数组首地址（数组名即首地址）和长度
+    incrementArray(arr, len);
+
+    // 4. 打印自增后的数组（验证结果）
+    printf("自增后的数组：\n");
+    for (i = 0; i < len; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
 
     return 0;
 }
