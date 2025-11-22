@@ -4,52 +4,56 @@
 #include <stdio.h>
 
 /**
- * @brief 将一个整型数组的元素在原数组上进行反转
- * @param arr 指向数组首元素的指针（数组名）
- * @param length 数组的长度
+ * @brief 指针版冒泡排序（从小到大）
+ * @param ptr 指向待排序数组首元素的指针
+ * @param n 数组长度（此处为 10）
  */
-void reverseArray(int arr[], int length) {
-    // 只需要循环数组的前半部分
-    for (int i = 0; i < length / 2; i++) {
-        // 计算当前元素需要交换的对应位置
-        int mirrorIndex = length - 1 - i;
-
-        // 交换 arr[i] 和 arr[mirrorIndex] 的值
-        int temp = arr[i];
-        arr[i] = arr[mirrorIndex];
-        arr[mirrorIndex] = temp;
+void bubbleSort(int *ptr, int n) {
+    int i, j;
+    // 外层循环控制排序轮数（n-1 轮）
+    for (i = 0; i < n - 1; i++) {
+        // 内层循环控制每轮比较次数（每轮减少 i 次，末尾 i 个元素已有序）
+        // 用指针遍历：p 从首元素开始，到 n-1-i 位置结束（避免越界）
+        int *p = ptr;
+        for (j = 0; j < n - 1 - i; j++) {
+            // 指针操作：比较当前元素与下一个元素，逆序则交换
+            if (*p > *(p + 1)) {
+                int temp = *p;
+                *p = *(p + 1);
+                *(p + 1) = temp;
+            }
+            p++;  // 指针向后移动，指向当前元素的下一个
+        }
     }
-}
-
-/**
- * @brief 打印一个整型数组的内容
- * @param arr 指向数组首元素的指针（数组名）
- * @param length 数组的长度
- */
-// 为了代码整洁，我们额外编写一个打印数组的函数
-void printArray(int arr[], int length) {
-    for (int i = 0; i < length; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\
-");
 }
 
 int main() {
-    // 1. 定义并初始化数组
-    int arr[5] = {1, 2, 3, 4, 5};
-    int length = 5;
+    int arr[10];
+    int i;
+    const int N = 10;
 
-    // 2. 打印原始数组
-    printf("原始数组: ");
-    printArray(arr, length);
+    // 1. 输入 10 个整数
+    printf("请输入 10 个整数，以空格或回车分隔：\n");
+    for (i = 0; i < N; i++) {
+        scanf("%d", arr + i);  // 指针偏移接收输入（等价于 &arr[i]）
+    }
 
-    // 3. 调用反转函数
-    reverseArray(arr, length);
+    // 2. 打印排序前的数组
+    printf("\n排序前：");
+    for (i = 0; i < N; i++) {
+        printf("%d ", *(arr + i));  // 指针解引用打印（等价于 arr[i]）
+    }
+    printf("\n");
 
-    // 4. 打印反转后的数组
-    printf("反转后数组: ");
-    printArray(arr, length);
+    // 3. 调用指针版冒泡排序（传入数组首地址和长度）
+    bubbleSort(arr, N);
+
+    // 4. 打印排序后的数组
+    printf("排序后（从小到大）：");
+    for (i = 0; i < N; i++) {
+        printf("%d ", *(arr + i));
+    }
+    printf("\n");
 
     return 0;
 }
