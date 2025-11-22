@@ -2,52 +2,37 @@
 //yuan2006.06@outlook.com
 //雷得苹
 #include <stdio.h>
-
-/**
- * @brief 通过指针将数组所有元素向后移动一位（末尾元素丢弃，首位补 0）
- * @param ptr_arr 指向数组首元素的指针
- * @param len 数组长度（固定为 5，此处保留参数使函数更通用）
- */
-void shiftRightDiscard(int *ptr_arr, int len) {
-    // 指针指向数组倒数第二个元素（从后往前遍历，避免覆盖未移动的元素）
-    int *p = ptr_arr + len - 2;  // len=5 时，指向 arr[3]（倒数第二个元素）
-    
-    // 从后往前循环：将后一个元素的值赋给前一个元素（指针向前移动）
-    for (; p >= ptr_arr; p--) {
-        *p = *(p + 1);  // 把当前指针下一个位置的元素值，赋给当前指针指向的位置
-    }
-    
-    // 数组第一个位置（首元素）补 0
-    *ptr_arr = 0;
-}
+#include <stdlib.h>  // 包含 malloc 和 free 函数的头文件
 
 int main() {
-    int arr[5];
+    int *ptr;  // 定义指针，用于指向动态申请的内存空间
     int i;
-    const int LEN = 5;  // 数组长度固定为 5
+    const int N = 5;  // 存储的整数个数
 
-    // 1. 输入数组元素
+    // 1. 动态申请能存储 5 个整数的内存空间
+    // sizeof(int) 获取单个 int 类型的字节数，乘以 5 得到总所需字节数
+    ptr = (int *)malloc(N * sizeof(int));
+
+    // （题目要求简化，无需判断内存分配是否成功，此处省略判断逻辑）
+
+    // 2. 键盘输入 5 个整数，通过指针存入动态内存
     printf("请输入 5 个整数，以空格或回车分隔：\n");
-    for (i = 0; i < LEN; i++) {
-        scanf("%d", &arr[i]);
+    for (i = 0; i < N; i++) {
+        // 指针偏移：ptr + i 指向第 i 个整数的内存地址，解引用后存入值
+        scanf("%d", ptr + i);  // 等价于 &ptr[i]，但更贴合指针操作需求
     }
 
-    // 2. 打印移动前的数组
-    printf("\n移动前的数组：\n");
-    for (i = 0; i < LEN; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    // 3. 调用函数：传入数组首地址和长度
-    shiftRightDiscard(arr, LEN);
-
-    // 4. 打印移动后的数组（验证结果）
-    printf("向后移动一位后的数组（末尾元素丢弃，首位补 0）：\n");
-    for (i = 0; i < LEN; i++) {
-        printf("%d ", arr[i]);
+    // 3. 遍历打印所有元素（指针操作）
+    printf("\n动态内存中存储的元素：\n");
+    for (i = 0; i < N; i++) {
+        // 解引用指针偏移后的地址，获取对应元素值
+        printf("%d ", *(ptr + i));  // 等价于 ptr[i]
     }
     printf("\n");
+
+    // 4. 释放动态申请的内存，避免内存泄漏
+    free(ptr);
+    ptr = NULL;  // 释放后将指针置空，避免成为“野指针”（安全编程习惯）
 
     return 0;
 }
